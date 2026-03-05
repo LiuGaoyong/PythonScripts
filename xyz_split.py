@@ -7,9 +7,8 @@ from ase.calculators.calculator import Calculator
 from ase.io import iread
 
 
-def main(xyz_file: Path, out_dir: Path = Path("out")) -> None:
-    if out_dir.exists():
-        raise ValueError(f"{out_dir} already exists")
+def main(xyz_file: Path) -> None:
+    out_dir = xyz_file.parent.joinpath(xyz_file.stem)
     out_dir.mkdir(parents=True, exist_ok=True)
     for atoms in iread(xyz_file):
         k = atoms.get_chemical_formula("metal") + "_S"
