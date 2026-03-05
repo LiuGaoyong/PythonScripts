@@ -7,10 +7,10 @@ from ase.calculators.calculator import Calculator
 from ase.io import iread
 
 
-def main(xyz_file: Path) -> None:
-    out_dir = xyz_file.parent.joinpath(xyz_file.stem)
+def main(xyz: Path) -> None:
+    out_dir = xyz.parent.joinpath(xyz.stem)
     out_dir.mkdir(parents=True, exist_ok=True)
-    for atoms in iread(xyz_file):
+    for atoms in iread(xyz):
         k = atoms.get_chemical_formula("metal") + "_S"
         hb: bytes = atoms.positions.tobytes() + atoms.cell.array.tobytes()
         if isinstance(atoms.calc, Calculator):
