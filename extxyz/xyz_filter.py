@@ -1,8 +1,10 @@
+#!/usr/bin/env python3
 from pathlib import Path
 
 import typer
 from ase.calculators.calculator import Calculator
 from ase.io import iread
+from tqdm import tqdm
 
 DICT = {
     "E": "energy",
@@ -17,7 +19,7 @@ def main(xyz: Path, keys: str = "EFS") -> None:
     new_xyz = xyz.with_suffix(f".filter-{keys}.xyz")
     dct = {k: DICT[k] for k in keys}
     with new_xyz.open("w") as f:
-        for atoms in iread(xyz):
+        for atoms in tqdm(iread(xyz)):
             if not isinstance(atoms.calc, Calculator):
                 continue  # skip non SPE info
             if any(v not in atoms.calc.results.keys() for v in dct.values()):
