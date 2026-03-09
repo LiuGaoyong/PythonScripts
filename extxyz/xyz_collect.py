@@ -21,4 +21,3 @@ def main(format: str = "vasp") -> None:
 
 
 typer.run(main)
-
